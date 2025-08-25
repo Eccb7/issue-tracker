@@ -1,0 +1,14 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Issues") do |sheet|
+  sheet.add_row %w[ID Title Status Priority Project CreatedAt]
+  Issue.includes(:project).find_each do |issue|
+    sheet.add_row [
+      issue.id,
+      issue.title,
+      issue.status,
+      issue.priority,
+      issue.project.title,
+      issue.created_at.strftime("%Y-%m-%d %H:%M")
+    ]
+  end
+end
