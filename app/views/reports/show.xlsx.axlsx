@@ -1,5 +1,5 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: "Issues") do |sheet|
+xlsx_package.workbook.add_worksheet(name: "Issues") do |sheet|
   sheet.add_row %w[ID Title Status Priority Project CreatedAt]
   Issue.includes(:project).find_each do |issue|
     sheet.add_row [

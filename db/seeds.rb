@@ -31,7 +31,7 @@ issue_samples = [
   {
     title: "Notification emails not sent",
     description: "Some users do not receive notification emails.",
-    status: "new",
+    status: "pending",
     priority: 4
   },
   {

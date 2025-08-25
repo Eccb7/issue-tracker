@@ -3,12 +3,29 @@
   <head>
     <title><%= content_for(:title) || "Issue Tracker" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="chartkick-rendering-wait-time" content="200">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <!-- Direct script references to ensure charts work -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartkick@5.0.1/dist/chartkick.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        if (typeof Chartkick !== 'undefined' && typeof Chart !== 'undefined') {
+          Chartkick.use(Chart);
+          console.log("Chartkick initialized with Chart.js via CDN");
+        } else {
+          console.error("Chartkick or Chart.js not loaded via CDN");
+        }
+      });
+    </script>
   </head>
   
   <body class="bg-gray-100 min-h-screen">

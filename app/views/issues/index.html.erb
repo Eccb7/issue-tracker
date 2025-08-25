@@ -19,7 +19,7 @@
 			<tr class="border-b">
 				<td class="p-2"><%= link_to issue.title, issue %></td>
 				<td class="p-2"><%= issue.description %></td>
-				<td class="p-2"><%= issue.status %></td>
+				<td class="p-2"><%= display_status(issue) %></td>
 				<td class="p-2"><%= issue.priority %></td>
 				<td class="p-2"><%= issue.project.title %></td>
 				<td class="p-2">

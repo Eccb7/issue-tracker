@@ -1,0 +1,13 @@
+  xlsx_package.workbook.add_worksheet(name: "Project Issues") do |sheet|
+  sheet.add_row ["ID", "Title", "Status", "Priority", "Assignee", "Created At"]
+  @issues.each do |issue|
+    sheet.add_row [
+      issue.id,
+      issue.title,
+      (issue.respond_to?(:status) ? issue.status : nil),
+      (issue.respond_to?(:priority) ? issue.priority : nil),
+      (issue.respond_to?(:assignee) ? issue.assignee : nil),
+      issue.created_at&.strftime("%Y-%m-%d")
+    ]
+  end
+end

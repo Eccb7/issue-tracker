@@ -42,8 +42,20 @@ class ProjectsController < ApplicationController
 
   # Delete a project
   def destroy
-    @project.destroy
-    redirect_to projects_url, notice: "Project was successfully destroyed."
+
+    if @project.destroy
+      respond_to do |format|
+        format.html { redirect_to projects_url, notice: "Project was successfully deleted." }
+        format.turbo_stream { flash.now[:notice] = "Project was successfully deleted." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to projects_url, alert: "Failed to delete project: #{@project.errors.full_messages.join(', ')}" }
+        format.turbo_stream { flash.now[:alert] = "Failed to delete project: #{@project.errors.full_messages.join(', ')}" }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

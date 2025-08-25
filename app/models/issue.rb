@@ -8,7 +8,19 @@ class Issue < ApplicationRecord
   validates :description, presence: true
   validates :status, presence: true
 
-  # Status enum (uncomment and fix if needed)
+    # Status enum
+    enum :status, [:pending, :in_progress, :resolved, :closed]
+
+    # Override this method to avoid conflict with 'new' Rails method
+    def self.statuses
+      { 
+        "new" => 0,
+        "pending" => 0,
+        "in_progress" => 1,
+        "resolved" => 2, 
+        "closed" => 3
+      }
+    end
   # enum status: { new: 0, in_progress: 1, closed: 2 }
   validates :title, presence: true
   validates :priority, inclusion: { in: 1..5 }

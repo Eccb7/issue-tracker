@@ -19,6 +19,10 @@ class IssuesController < ApplicationController
   # Create a new issue for a project
   def create
     @issue = @project.issues.build(issue_params)
+
+    # Set default status if not provided
+    @issue.status = 'pending' if @issue.status.blank?
+
     if @issue.save
       redirect_to @project, notice: "Issue was successfully created."
     else

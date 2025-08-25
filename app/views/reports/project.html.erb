@@ -5,6 +5,40 @@
   <%= pie_chart @issues_by_status, height: "250px" %>
 </div>
 
+<h2 class="text-xl font-bold mb-4">📊 Project Graph Report</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" data-controller="chart">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-lg font-bold mb-4">Issues by Status</h3>
+    <%= pie_chart @issues.group(:status).count, 
+                  id: "project-status-chart", 
+                  legend: true %>
+  </div>
+
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-lg font-bold mb-4">Issues by Priority</h3>
+    <%= column_chart @issues.group(:priority).count, 
+                     id: "project-priority-chart" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 gap-6 mb-6" data-controller="chart">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-lg font-bold mb-4">Issues Timeline</h3>
+    <% 
+    # Prepare data manually to avoid date adapter issues
+    timeline_data = {}
+    @issues.group_by { |i| i.created_at.to_date.to_s }.each do |date_str, issues|
+      timeline_data[date_str] = issues.count
+    end
+    %>
+
+    <%= column_chart timeline_data, 
+                   id: "project-timeline-chart",
+                   title: "Issues Created Over Time" %>
+  </div>
+</div>
+
 <table class="w-full bg-white shadow rounded">
   <thead>
     <tr class="bg-gray-200 text-left">

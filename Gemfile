@@ -69,16 +69,16 @@ group :test do
 end
 
 # Charts library
-gem "chartkick"
-gem "groupdate"
+gem "chartkick", "~> 5.0.1"
+gem "groupdate", "~> 6.7.0"
 
 # Excel export
 gem "caxlsx"
 gem "caxlsx_rails"
 
 # PDF export
-gem "wicked_pdf"
-# gem "wkhtmltopdf-binary"
+gem "prawn", "~> 2.5.0"
+gem "prawn-table", "~> 0.2.2"
 
 gem "importmap-rails", "~> 2.2"
 
