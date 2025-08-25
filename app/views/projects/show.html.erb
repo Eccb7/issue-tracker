@@ -5,8 +5,10 @@
 <div class="mb-6 flex gap-4 items-center">
   <%= link_to "Edit Project", edit_project_path(@project), class: "bg-yellow-500 text-white px-3 py-1 rounded" %>
   <%= link_to "Back to Projects", projects_path, class: "text-blue-600" %>
+  <%= link_to "Kanban Board", kanban_project_path(@project), class: "bg-purple-600 text-white px-3 py-1 rounded" %>
   <%= link_to "Project Report", project_reports_path(@project), class: "bg-green-600 text-white px-3 py-1 rounded" %>
   <%= link_to "Download PDF", project_reports_path(@project, format: :pdf), class: "bg-red-600 text-white px-3 py-1 rounded" %>
+  <%= button_to "Delete Project", project_path(@project), method: :delete, data: { confirm: "Delete project?" }, class: "bg-red-600 text-white px-3 py-1 rounded" %>
 </div>
 
 <h2 class="text-xl font-semibold mb-2">Issues</h2>
@@ -29,7 +31,7 @@
         <td class="p-2"><%= issue.priority %></td>
         <td class="p-2 flex gap-2">
           <%= link_to "Edit", edit_issue_path(issue), class: "text-blue-600" %>
-          <%= link_to "Delete", issue, data: { turbo_method: :delete, turbo_confirm: "Delete issue?" }, class: "text-red-600" %>
+          <%= button_to "Delete", issue_path(issue), method: :delete, data: { confirm: "Delete issue?" }, class: "text-red-600" %>
         </td>
       </tr>
     <% end %>
