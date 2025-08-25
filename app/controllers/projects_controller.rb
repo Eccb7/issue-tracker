@@ -42,20 +42,29 @@ class ProjectsController < ApplicationController
 
   # Delete a project
   def destroy
-
     if @project.destroy
       respond_to do |format|
-        format.html { redirect_to projects_url, notice: "Project was successfully deleted." }
+        format.html { redirect_to projects_path, notice: "Project was successfully deleted." }
         format.turbo_stream { flash.now[:notice] = "Project was successfully deleted." }
         format.json { head :no_content }
       end
     else
       respond_to do |format|
-        format.html { redirect_to projects_url, alert: "Failed to delete project: #{@project.errors.full_messages.join(', ')}" }
+        format.html { redirect_to project_path(@project), alert: "Failed to delete project: #{@project.errors.full_messages.join(', ')}" }
         format.turbo_stream { flash.now[:alert] = "Failed to delete project: #{@project.errors.full_messages.join(', ')}" }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # Kanban view for a project
+  def kanban
+    @project = Project.find(params[:id])
+  @new_issues = @project.issues.where(status: 0) # 0 = new_issue
+  @pending_issues = @project.issues.where(status: 1) # 1 = pending
+    @in_progress_issues = @project.issues.where(status: 2) # 2 = in_progress
+    @resolved_issues = @project.issues.where(status: 3) # 3 = resolved
+    @closed_issues = @project.issues.where(status: 4) # 4 = closed
   end
 
   private
