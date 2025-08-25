@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
       format.html
       format.xlsx { render xlsx: "show", filename: "issues_report.xlsx" }
       format.pdf do
-        # Generate PDF directly in the controller
+        # Generate PDF using Prawn for now
         pdf = Prawn::Document.new
         pdf.text "Issues Report", size: 24, style: :bold, align: :center
         pdf.move_down 20
@@ -21,6 +21,14 @@ class ReportsController < ApplicationController
         pdf.text "Summary", size: 16, style: :bold
         pdf.move_down 10
         pdf.text "Total Issues: #{@issues.count}", size: 12
+
+        # Add status breakdown
+        status_counts = @issues.group_by(&:status).transform_values(&:count)
+        pdf.move_down 10
+        pdf.text "Status Breakdown:", size: 12
+        status_counts.each do |status, count|
+          pdf.text "  • #{status || 'Unknown'}: #{count}", size: 10
+        end
 
         # Table
         pdf.move_down 20
@@ -67,12 +75,11 @@ class ReportsController < ApplicationController
       format.html { render :project }
       format.xlsx { render xlsx: "project", filename: "project_issues_report.xlsx" }
       format.pdf do
-        # Generate PDF directly in the controller
+        # Fall back to Prawn for now since HTML PDF rendering requires additional setup
         pdf = Prawn::Document.new
 
-        # Project title - try to get name or title attribute
-        project_title = @project.respond_to?(:name) ? @project.name : 
-                      (@project.respond_to?(:title) ? @project.title : "Project #{@project.id}")
+        # Project title - safely get the project name or fallback to ID
+        project_title = @project.try(:name) || @project.try(:title) || "Project ##{@project.id}"
 
         pdf.text "Project Report: #{project_title}", size: 24, style: :bold, align: :center
         pdf.move_down 20
