@@ -51,6 +51,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -63,3 +67,17 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Charts library
+gem "chartkick"
+gem "groupdate"
+
+# Excel export
+gem "caxlsx"
+gem "caxlsx_rails"
+
+# PDF export
+gem "wicked_pdf"
+# gem "wkhtmltopdf-binary"
+
+gem "importmap-rails", "~> 2.2"
