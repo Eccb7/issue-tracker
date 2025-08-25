@@ -19,6 +19,13 @@ gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Drag and drop functionality
+gem "sortable-rails"
+
+# PDF generation
+gem "grover", "~> 1.1.0"  # For HTML to PDF with charts
+gem "puppeteer-ruby"      # Required by Grover for Chrome headless
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
