@@ -1,0 +1,11 @@
+<%= form_with(model: project, class: "space-y-4") do |f| %>
+  <div>
+    <%= f.label :title, class: "block font-semibold" %>
+    <%= f.text_field :title, class: "border rounded w-full p-2" %>
+  </div>
+  <div>
+    <%= f.label :description, class: "block font-semibold" %>
+    <%= f.text_area :description, class: "border rounded w-full p-2" %>
+  </div>
+  <%= f.submit class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+<% end %>
