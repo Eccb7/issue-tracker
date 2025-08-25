@@ -1,4 +1,3 @@
-# This file is being removed
 
   def generate_content
     # Add a title
@@ -74,7 +73,7 @@ class ProjectReportPdf < Prawn::Document
 
   def add_header
     # Try both name and title for flexibility
-    project_title = @project.respond_to?(:name) ? @project.name : 
+    project_title = @project.respond_to?(:name) ? @project.name :
                     (@project.respond_to?(:title) ? @project.title : "Project")
 
     text "Project Report: #{project_title}", size: 24, style: :bold, align: :center
@@ -88,7 +87,7 @@ class ProjectReportPdf < Prawn::Document
     move_down 10
 
     # Try both name and title for flexibility
-    project_title = @project.respond_to?(:name) ? @project.name : 
+    project_title = @project.respond_to?(:name) ? @project.name :
                     (@project.respond_to?(:title) ? @project.title : "Project")
 
     text "Name: #{project_title}", size: 12
@@ -164,7 +163,7 @@ class ProjectReportPdf < Prawn::Document
 
   def add_footer
     move_down 20
-    number_pages "<page> of <total>", 
+    number_pages "<page> of <total>",
                 { start_count_at: 1, page_filter: :all, at: [bounds.right - 50, 0], align: :right }
   end
 end
