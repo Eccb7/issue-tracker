@@ -1,52 +1,62 @@
-## Issue: Model for tracking issues within projects
 class Issue < ApplicationRecord
-  # Each issue belongs to a project
   belongs_to :project
 
-  # Validations for required fields
   validates :title, presence: true
   validates :description, presence: true
-  validates :status, presence: true
 
-    # Status enum
-    enum :status, [:pending, :in_progress, :resolved, :closed]
+  # Define status enum
+  enum :status, {
+    new_issue: 0,
+    pending: 1,
+    in_progress: 2,
+    resolved: 3,
+    closed: 4
+  }
 
-    # Override this method to avoid conflict with 'new' Rails method
-    def self.statuses
-      { 
-        "new" => 0,
-        "pending" => 0,
-        "in_progress" => 1,
-        "resolved" => 2, 
-        "closed" => 3
-      }
+  # Priority is now a regular integer field (1-5)
+  validates :priority, presence: true, inclusion: { in: 1..5 }
+
+  # Helper method to get priority label
+  def priority_label
+    case priority
+    when 1 then "Very Low"
+    when 2 then "Low"
+    when 3 then "Medium"
+    when 4 then "High"
+    when 5 then "Critical"
+    else "Unknown"
     end
-  # enum status: { new: 0, in_progress: 1, closed: 2 }
-  validates :title, presence: true
-  validates :priority, inclusion: { in: 1..5 }
+  end
 
-  # Returns a hash of issue counts by status
+  # Helper method to get priority color class
+  def priority_color
+    case priority
+    when 1 then "bg-gray-100 text-gray-800"
+    when 2 then "bg-blue-100 text-blue-800"
+    when 3 then "bg-yellow-100 text-yellow-800"
+    when 4 then "bg-orange-100 text-orange-800"
+    when 5 then "bg-red-100 text-red-800"
+    else "bg-gray-100 text-gray-800"
+    end
+  end
+
   def self.by_status
     group(:status).count
   end
 
-  # Returns a hash of issue counts by project
   def self.by_project
     group(:project_id).count
   end
 
-  # Mark issue as closed
   def mark_as_closed
     update(status: :closed)
   end
 
-  # Mark issue as in progress
   def mark_as_in_progress
     update(status: :in_progress)
   end
 
-  # Mark issue as new
-  def mark_as_new
-    update(status: :new)
+  def mark_as_new_issue
+    update(status: :new_issue)
   end
 end
