@@ -19,6 +19,13 @@ gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Drag and drop functionality
+gem "sortable-rails"
+
+# PDF generation
+gem "grover", "~> 1.1.0"  # For HTML to PDF with charts
+gem "puppeteer-ruby"      # Required by Grover for Chrome headless
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -51,6 +58,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
@@ -63,3 +74,21 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Charts library
+gem "chartkick", "~> 5.0.1"
+gem "groupdate", "~> 6.7.0"
+
+# Excel export
+gem "caxlsx"
+gem "caxlsx_rails"
+
+# PDF export
+gem "prawn", "~> 2.5.0"
+gem "prawn-table", "~> 0.2.2"
+
+gem "importmap-rails", "~> 2.2"
+
+gem "tailwindcss-ruby", "~> 4.1"
+
+gem "tailwindcss-rails", "~> 4.3"

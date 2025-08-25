@@ -1,0 +1,67 @@
+<h1 class="text-2xl font-bold mb-4">Report for <%= @project.title %></h1>
+
+<div class="mb-6">
+  <h2 class="font-semibold mb-2">Issues by Status</h2>
+  <%= pie_chart @issues_by_status, height: "250px" %>
+</div>
+
+<h2 class="text-xl font-bold mb-4">📊 Project Graph Report</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" data-controller="chart">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-lg font-bold mb-4">Issues by Status</h3>
+    <%= pie_chart @issues.group(:status).count, 
+                  id: "project-status-chart", 
+                  legend: true %>
+  </div>
+
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-lg font-bold mb-4">Issues by Priority</h3>
+    <%= column_chart @issues.group(:priority).count, 
+                     id: "project-priority-chart" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 gap-6 mb-6" data-controller="chart">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-lg font-bold mb-4">Issues Timeline</h3>
+    <% 
+    # Prepare data manually to avoid date adapter issues
+    timeline_data = {}
+    @issues.group_by { |i| i.created_at.to_date.to_s }.each do |date_str, issues|
+      timeline_data[date_str] = issues.count
+    end
+    %>
+
+    <%= column_chart timeline_data, 
+                   id: "project-timeline-chart",
+                   title: "Issues Created Over Time" %>
+  </div>
+</div>
+
+<table class="w-full bg-white shadow rounded">
+  <thead>
+    <tr class="bg-gray-200 text-left">
+      <th class="p-2">Title</th>
+      <th class="p-2">Description</th>
+      <th class="p-2">Status</th>
+      <th class="p-2">Priority</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr class="border-b">
+        <td class="p-2"><%= issue.title %></td>
+        <td class="p-2"><%= issue.description %></td>
+        <td class="p-2"><%= issue.status %></td>
+        <td class="p-2"><%= issue.priority %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="mt-6 flex gap-3">
+  <%= link_to "Download Excel", project_reports_path(@project, format: :xlsx), class: "bg-green-600 text-white px-4 py-2 rounded" %>
+  <%= link_to "Download PDF", project_reports_path(@project, format: :pdf), class: "bg-red-600 text-white px-4 py-2 rounded" %>
+</div>
+<%= link_to "Back to Projects", projects_path, class: "mt-4 inline-block text-blue-600" %>

@@ -1,0 +1,9 @@
+<h1 class="text-2xl font-bold mb-4"><%= @issue.title %></h1>
+<p>Status: <%= @issue.status %></p>
+<p>Priority: <%= @issue.priority %></p>
+<p>Project: <%= link_to @issue.project.title, @issue.project %></p>
+
+<div class="mt-4">
+  <%= link_to "Edit Issue", edit_issue_path(@issue), class: "bg-yellow-500 text-white px-3 py-1 rounded" %>
+  <%= link_to "Back", @issue.project, class: "ml-2 text-blue-600" %>
+</div>

@@ -16,6 +16,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_063225) do
 
   create_table "issues", force: :cascade do |t|
     t.string "title"
+    t.text "description"
     t.integer "status"
     t.integer "priority"
     t.bigint "project_id", null: false
