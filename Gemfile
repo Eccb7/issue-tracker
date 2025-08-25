@@ -81,3 +81,7 @@ gem "wicked_pdf"
 # gem "wkhtmltopdf-binary"
 
 gem "importmap-rails", "~> 2.2"
+
+gem "tailwindcss-ruby", "~> 4.1"
+
+gem "tailwindcss-rails", "~> 4.3"
