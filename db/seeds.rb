@@ -13,7 +13,7 @@ issue_samples = [
   {
     title: "Login page error",
     description: "Users are unable to log in due to a server error.",
-    status: "new",
+  status: "new_issue",
     priority: 1
   },
   {
